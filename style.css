@@ -1,42 +1,90 @@
 * {
   margin: 0;
   padding: 0;
+  user-select: none;
+}
+
+:root {
+  --background: #202020;
+  --buttonsFirst: #3b3b3b;
+  --buttonsSecond: #323232;
+  --buttonsThird: #282828;
 }
 
 main {
   display: flex;
-  justify-content: space-between;
-  margin: 25px auto;
-  width: 800px;
+  /* justify-content: space-between; */
+  /* margin: 25px auto; */
+  /* width: 900px; */
+  /* height: 100vh; */
+  background: rgb(32, 32, 32);
+  color: rgb(255, 255, 255);
 }
 
 .calc {
   display: flex;
   flex-direction: column;
+  /* height: 100vh; */
 }
 
 .display {
-  /* width: 100%; */
-  height: 30px;
-  background: green;
+  font-size: 35px;
+  height: 50px;
+  text-align: end;
 }
 
 .buttons {
   display: flex;
-  /* flex: 0 0 50%; */
-  /* flex-direction: row-reverse; */
-  flex-flow: row-reverse wrap;
-  justify-content: center;
-  height: 250px;
+  flex-flow: row wrap;
+  /* justify-content: center; */
 }
 
 .button {
-  flex: 0 0 30%;
-  width: 60px;
-  height: 60px;
-  background: wheat;
+  border-radius: 5px;
+  flex: 0 0 20%;
+  width: 8vh;
+  height: 11vh;
+  min-width: 50px;
+  min-height: 50px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 3px;
+  margin: 1px;
+}
+
+.gray {
+  background: var(--buttonsFirst);
+}
+
+.gray:hover {
+  background: var(--buttonsSecond)
+}
+
+.gray:active {
+  background: var(--buttonsThird)
+}
+
+.gray_dark {
+  background: var(--buttonsSecond);
+}
+
+.gray_dark:hover {
+  background: var(--buttonsFirst)
+}
+
+.gray_dark:active {
+  background: var(--buttonsSecond)
+}
+
+.green {
+  background: #45e532;
+  color: black;
+}
+
+.green:hover {
+  background: #41d130;
+}
+
+.green:active {
+  background: #3dbd2e;
 }
