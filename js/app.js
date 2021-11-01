@@ -56,6 +56,7 @@ const listOfButtons = [
 
 const display = document.querySelector('.display');
 const buttonsContainer = document.querySelector('.buttons');
+const listOfActionButtons = ['Backspace', 'Delete', 'Enter'];
 
 init();
 
@@ -66,8 +67,9 @@ function init() {
 
     initButton(button, style);
   }
+
   document.body.addEventListener('click', eventHandler);
-  document.body.addEventListener('keypress', eventHandler);
+  document.body.addEventListener('keyup', eventHandler);
 }
 
 function initButton(button, style) {
@@ -84,9 +86,36 @@ function eventHandler(event) {
 
   if (typeOfEvent == 'click' && event.target.classList.contains('button')) {
     btn = event.target.textContent;
-  } else if (typeOfEvent == 'keypress') {
+  } else if (typeOfEvent == 'keyup' && іsLegalBtn(event.key)) {
     btn = event.key;
   } else {
-    return null;
+    null;
+  }
+
+  calc(btn);
+  displayEitor.add(btn);
+}
+
+function іsLegalBtn(btn) {
+  if (
+    listOfButtons[0].includes(btn) ||
+    listOfActionButtons.includes(btn)
+  ) {
+    return true;
+  } else {
+    return false;
   }
 }
+
+function calc(btn) {
+}
+
+const displayEitor = {
+  add(symbol) {
+    if (display.textContent === '0') {
+      display.textContent = symbol;
+    } else {
+      display.textContent += symbol;
+    }
+  },
+};
