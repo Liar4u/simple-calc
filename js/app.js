@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 const listOfButtons = [
   [
     '%',
@@ -54,6 +54,7 @@ const listOfButtons = [
   ],
 ];
 
+const display = document.querySelector('.display');
 const buttonsContainer = document.querySelector('.buttons');
 
 init();
@@ -65,6 +66,8 @@ function init() {
 
     initButton(button, style);
   }
+  document.body.addEventListener('click', eventHandler);
+  document.body.addEventListener('keypress', eventHandler);
 }
 
 function initButton(button, style) {
@@ -72,5 +75,18 @@ function initButton(button, style) {
   currentButton.setAttribute('class', 'button' + ' ' + style);
   currentButton.innerHTML = button;
 
-  buttonsGrid.append(currentButton);
+  buttonsContainer.append(currentButton);
+}
+
+function eventHandler(event) {
+  const typeOfEvent = event.type;
+  let btn = '';
+
+  if (typeOfEvent == 'click' && event.target.classList.contains('button')) {
+    btn = event.target.textContent;
+  } else if (typeOfEvent == 'keypress') {
+    btn = event.key;
+  } else {
+    return null;
+  }
 }
