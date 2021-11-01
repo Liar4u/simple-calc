@@ -89,7 +89,7 @@ function eventHandler(event) {
   } else if (typeOfEvent == 'keyup' && іsLegalBtn(event.key)) {
     btn = event.key;
   } else {
-    null;
+    return null;
   }
 
   calc(btn);
