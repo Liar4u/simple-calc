@@ -112,7 +112,7 @@ function calc(btn) {
 
 const displayEitor = {
   add(symbol) {
-    if (display.textContent === '0') {
+    if (display.textContent === '0' && symbol !== '.') {
       display.textContent = symbol;
     } else {
       display.textContent += symbol;
