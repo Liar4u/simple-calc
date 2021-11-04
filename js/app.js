@@ -54,6 +54,17 @@ const listOfButtons = [
   ],
 ];
 
+const aliases = {
+  '-': 'sub',
+  '+': 'sum',
+  '/': 'div',
+  '*': 'mult',
+  '=': 'result',
+  D: 'del',
+  C: 'clear',
+  CE: 'clearEntry',
+};
+
 const display = document.querySelector('.display');
 const buttonsContainer = document.querySelector('.buttons');
 const listOfActionButtons = ['Backspace', 'Delete', 'Enter'];
