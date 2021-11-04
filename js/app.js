@@ -68,8 +68,8 @@ const aliases = {
 const display = document.querySelector('.display');
 const buttonsContainer = document.querySelector('.buttons');
 const listOfActionButtons = ['Backspace', 'Delete', 'Enter'];
-const correctExpression = new RegExp(/^[\d]{1,9}[+,-,*,/][\d]{1,9}$/);
-const operatorInExpression = new RegExp(/[+,-,*,/]/);
+const correctExpression = new RegExp(/^[\d]{1,9}[-,+,*,/][\d]{1,9}$/);
+const operatorInExpression = new RegExp(/[-,+,*,/]/);
 let firstNum;
 let secondNum;
 let operatorAlias;
