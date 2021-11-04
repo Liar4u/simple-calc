@@ -155,6 +155,8 @@ function calc(symbol) {
     /\d/.test(symbol)
   ) {
     display.textContent = symbol;
+  } else if (symbol === 'Backspace' || symbol === 'D') {
+    display.textContent = expression.substring(0, expression.length - 1);
   } else {
     display.textContent += symbol;
   }
