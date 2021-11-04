@@ -68,8 +68,27 @@ const aliases = {
 const display = document.querySelector('.display');
 const buttonsContainer = document.querySelector('.buttons');
 const listOfActionButtons = ['Backspace', 'Delete', 'Enter'];
-
+const correctExpression = new RegExp(/^[\d]{1,9}[+,-,*,/][\d]{1,9}$/);
+const operatorInExpression = new RegExp(/[+,-,*,/]/);
+let firstNum;
+let secondNum;
+let operatorAlias;
 init();
+
+const operations = {
+  sub() {
+    return firstNum - secondNum;
+  },
+  sum() {
+    return firstNum + secondNum;
+  },
+  div() {
+    return firstNum / secondNum;
+  },
+  mult() {
+    return firstNum * secondNum;
+  },
+};
 
 function init() {
   for (let i = 0; i < listOfButtons[0].length; i++) {
@@ -104,29 +123,49 @@ function eventHandler(event) {
   }
 
   calc(btn);
-  displayEitor.add(btn);
 }
 
 function іsLegalBtn(btn) {
-  if (
-    listOfButtons[0].includes(btn) ||
-    listOfActionButtons.includes(btn)
-  ) {
+  if (listOfButtons[0].includes(btn) || listOfActionButtons.includes(btn)) {
     return true;
   } else {
     return false;
   }
 }
 
-function calc(btn) {
+function calc(symbol) {
+  const expression = display.textContent;
+
+  if (
+    correctExpression.test(expression) &&
+    (symbol === '=' || symbol === 'Enter')
+  ) {
+    const operator = String(expression.match(operatorInExpression));
+    firstNum = Number(expression.slice(0, expression.lastIndexOf(operator)));
+    secondNum = Number(
+      expression.slice(expression.lastIndexOf(operator) + 1, expression.length)
+    );
+    operatorAlias = aliases[operator];
+
+    const result = operations[operatorAlias]();
+    display.textContent = result;
+  } else if (
+    display.textContent === '0' &&
+    symbol !== '.' &&
+    /\d/.test(symbol)
+  ) {
+    display.textContent = symbol;
+  } else {
+    display.textContent += symbol;
+  }
 }
 
-const displayEitor = {
-  add(symbol) {
-    if (display.textContent === '0' && symbol !== '.') {
-      display.textContent = symbol;
-    } else {
-      display.textContent += symbol;
-    }
-  },
-};
+// const displayEitor = {
+//   add(symbol) {
+//     if (display.textContent === '0' && symbol !== '.' && /\d/.test(symbol)) {
+//       display.textContent = symbol;
+//     } else {
+//       display.textContent += symbol;
+//     }
+//   },
+// };
