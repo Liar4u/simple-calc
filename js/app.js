@@ -72,7 +72,9 @@ const correctExpression = new RegExp(/^[\d]{1,9}[-,+,*,/][\d]{1,9}$/);
 const operatorInExpression = new RegExp(/[-,+,*,/]/);
 let firstNum;
 let secondNum;
+let operator;
 let operatorAlias;
+let expression;
 init();
 
 const operations = {
@@ -134,20 +136,18 @@ function іsLegalBtn(btn) {
 }
 
 function calc(symbol) {
-  const expression = display.textContent;
+  expression = get.expression();
 
   if (
     correctExpression.test(expression) &&
     (symbol === '=' || symbol === 'Enter')
   ) {
-    const operator = String(expression.match(operatorInExpression));
-    firstNum = Number(expression.slice(0, expression.lastIndexOf(operator)));
-    secondNum = Number(
-      expression.slice(expression.lastIndexOf(operator) + 1, expression.length)
-    );
-    operatorAlias = aliases[operator];
+    operator = get.operator();
+    firstNum = get.firstNum();
+    secondNum = get.secondNum();
+    operatorAlias = get.alias(operator);
 
-    const result = operations[operatorAlias]();
+    const result = get.result();
     display.textContent = result;
   } else if (
     display.textContent === '0' &&
@@ -170,4 +170,30 @@ function calc(symbol) {
 //       display.textContent += symbol;
 //     }
 //   },
+//   replace() {},
+//   del() {},
+//   clear() {},
 // };
+
+const get = {
+  expression() {
+    return display.textContent;
+  },
+  operator() {
+    return String(expression.match(operatorInExpression));
+  },
+  firstNum() {
+    return Number(expression.slice(0, expression.lastIndexOf(operator)));
+  },
+  secondNum() {
+    return Number(
+      expression.slice(expression.lastIndexOf(operator) + 1, expression.length)
+    );
+  },
+  alias(char) {
+    return aliases[char];
+  },
+  result() {
+    return operations[operatorAlias]();
+  },
+};
