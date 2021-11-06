@@ -166,7 +166,7 @@ function calc(input) {
       : (display.textContent = '0');
   } else if (input === 'Delete' || input === 'C') {
     display.textContent = '0';
-  } else {
+  } else if (!listOfActionButtons.includes(input)) {
     display.textContent += input;
   }
 }
