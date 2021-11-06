@@ -75,7 +75,11 @@ const operations = {
     return firstNum + secondNum;
   },
   div() {
-    return firstNum / secondNum;
+    if (secondNum !== 0) {
+      return firstNum / secondNum;
+    } else {
+      return 'Cannot divide by zero';
+    }
   },
   mult() {
     return firstNum * secondNum;
@@ -84,8 +88,10 @@ const operations = {
 
 const display = document.querySelector('.display');
 const buttonsContainer = document.querySelector('.buttons');
+
 const correctExpression = new RegExp(/^[\d]{1,9}[-,+,*,/][\d]{1,9}$/);
 const operatorInExpression = new RegExp(/[-,+,*,/]/);
+
 let firstNum;
 let secondNum;
 let operator;
