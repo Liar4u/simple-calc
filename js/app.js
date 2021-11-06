@@ -154,7 +154,11 @@ function calc(input) {
   } else if (display.textContent === '0' && input !== '.' && /\d/.test(input)) {
     display.textContent = input;
   } else if (input === 'Backspace' || input === 'D') {
-    display.textContent = expression.substring(0, expression.length - 1);
+    expression.length > 1
+      ? (display.textContent = expression.substring(0, expression.length - 1))
+      : (display.textContent = '0');
+  } else if (input === 'Delete' || input === 'C') {
+    display.textContent = '0';
   } else {
     display.textContent += input;
   }
