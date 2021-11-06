@@ -128,11 +128,11 @@ function eventHandler(event) {
     input = event.target.textContent;
   } else if (typeOfEvent == 'keyup' && іsLegalBtn(event.key)) {
     input = event.key;
+    listOfButtons[0].includes(input) ? inputResponse(event) : null;
   } else {
     return null;
   }
 
-  inputResponse(event);
   calc(input);
 }
 
@@ -239,5 +239,5 @@ function inputResponse(event) {
     button.style.background = '#3dbd2e';
   }
 
-  setTimeout(() => button.style.background = '', 50);
+  setTimeout(() => (button.style.background = ''), 50);
 }
