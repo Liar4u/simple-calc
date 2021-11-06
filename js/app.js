@@ -132,6 +132,7 @@ function eventHandler(event) {
     return null;
   }
 
+  inputResponse(event);
   calc(input);
 }
 
@@ -210,3 +211,33 @@ const get = {
     return operations[operatorAlias]();
   },
 };
+
+function inputResponse(event) {
+  let button = '';
+
+  if (event.target.classList.contains('button')) {
+    button = event.target;
+  } else {
+    let xpath = `//div[text()='${event.key}'][contains(@class, 'button')]`;
+    button = document.evaluate(
+      xpath,
+      document,
+      null,
+      XPathResult.FIRST_ORDERED_NODE_TYPE,
+      null
+    ).singleNodeValue;
+  }
+
+  const classList = String(button.classList);
+  const buttonColor = classList.substr(classList.lastIndexOf(' ') + 1);
+
+  if (buttonColor === 'gray') {
+    button.style.background = '#282828';
+  } else if (buttonColor === 'gray_dark') {
+    button.style.background = '#3b3b3b';
+  } else {
+    button.style.background = '#3dbd2e';
+  }
+
+  setTimeout(() => button.style.background = '', 50);
+}
