@@ -54,6 +54,8 @@ const listOfButtons = [
   ],
 ];
 
+const listOfActionButtons = ['Backspace', 'Delete', 'Enter'];
+
 const aliases = {
   '-': 'sub',
   '+': 'sum',
@@ -64,18 +66,6 @@ const aliases = {
   C: 'clear',
   CE: 'clearEntry',
 };
-
-const display = document.querySelector('.display');
-const buttonsContainer = document.querySelector('.buttons');
-const listOfActionButtons = ['Backspace', 'Delete', 'Enter'];
-const correctExpression = new RegExp(/^[\d]{1,9}[-,+,*,/][\d]{1,9}$/);
-const operatorInExpression = new RegExp(/[-,+,*,/]/);
-let firstNum;
-let secondNum;
-let operator;
-let operatorAlias;
-let expression;
-init();
 
 const operations = {
   sub() {
@@ -91,6 +81,18 @@ const operations = {
     return firstNum * secondNum;
   },
 };
+
+const display = document.querySelector('.display');
+const buttonsContainer = document.querySelector('.buttons');
+const correctExpression = new RegExp(/^[\d]{1,9}[-,+,*,/][\d]{1,9}$/);
+const operatorInExpression = new RegExp(/[-,+,*,/]/);
+let firstNum;
+let secondNum;
+let operator;
+let operatorAlias;
+let expression;
+
+init();
 
 function init() {
   for (let i = 0; i < listOfButtons[0].length; i++) {
@@ -114,33 +116,33 @@ function initButton(button, style) {
 
 function eventHandler(event) {
   const typeOfEvent = event.type;
-  let btn = '';
+  let input = '';
 
   if (typeOfEvent == 'click' && event.target.classList.contains('button')) {
-    btn = event.target.textContent;
+    input = event.target.textContent;
   } else if (typeOfEvent == 'keyup' && іsLegalBtn(event.key)) {
-    btn = event.key;
+    input = event.key;
   } else {
     return null;
   }
 
-  calc(btn);
+  calc(input);
 }
 
-function іsLegalBtn(btn) {
-  if (listOfButtons[0].includes(btn) || listOfActionButtons.includes(btn)) {
+function іsLegalBtn(input) {
+  if (listOfButtons[0].includes(input) || listOfActionButtons.includes(input)) {
     return true;
   } else {
     return false;
   }
 }
 
-function calc(symbol) {
+function calc(input) {
   expression = get.expression();
 
   if (
     correctExpression.test(expression) &&
-    (symbol === '=' || symbol === 'Enter')
+    (input === '=' || input === 'Enter')
   ) {
     operator = get.operator();
     firstNum = get.firstNum();
@@ -149,25 +151,21 @@ function calc(symbol) {
 
     const result = get.result();
     display.textContent = result;
-  } else if (
-    display.textContent === '0' &&
-    symbol !== '.' &&
-    /\d/.test(symbol)
-  ) {
-    display.textContent = symbol;
-  } else if (symbol === 'Backspace' || symbol === 'D') {
+  } else if (display.textContent === '0' && input !== '.' && /\d/.test(input)) {
+    display.textContent = input;
+  } else if (input === 'Backspace' || input === 'D') {
     display.textContent = expression.substring(0, expression.length - 1);
   } else {
-    display.textContent += symbol;
+    display.textContent += input;
   }
 }
 
 // const displayEitor = {
-//   add(symbol) {
-//     if (display.textContent === '0' && symbol !== '.' && /\d/.test(symbol)) {
-//       display.textContent = symbol;
+//   add(input) {
+//     if (display.textContent === '0' && input !== '.' && /\d/.test(input)) {
+//       display.textContent = input;
 //     } else {
-//       display.textContent += symbol;
+//       display.textContent += input;
 //     }
 //   },
 //   replace() {},
@@ -179,20 +177,25 @@ const get = {
   expression() {
     return display.textContent;
   },
+
   operator() {
     return String(expression.match(operatorInExpression));
   },
+
   firstNum() {
     return Number(expression.slice(0, expression.lastIndexOf(operator)));
   },
+
   secondNum() {
     return Number(
       expression.slice(expression.lastIndexOf(operator) + 1, expression.length)
     );
   },
-  alias(char) {
-    return aliases[char];
+
+  alias(input) {
+    return aliases[input];
   },
+
   result() {
     return operations[operatorAlias]();
   },
